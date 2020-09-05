@@ -13,7 +13,9 @@ const WorkLock = ({
    isWorklockDataLoading,
    account,
    biddingStartDate,
-   biddingEndDate,
+   biddingEndDate, 
+   remainingCancellationTimeHuman,
+   biddingTimeRemaining,
 
    //
    minAllowedBid,
@@ -147,7 +149,6 @@ const WorkLock = ({
             <ModalContent isValid={isValid}>
                <span>Place new bid</span>
                <div>
-                  <b>Bidding period ended.</b>
                   <label htmlFor="">Enter bid amount (ETH):</label>
                   <input
                      placeholder="0.0"
@@ -177,11 +178,11 @@ const WorkLock = ({
                   <br />
                   <b>{account}</b>
                </span>
-               <div onClick={openModal}>Place new bid</div>
+               <div onClick={openModal}>Place Escrow</div>
             </div>
             <div className={s.participant_panels}>
                <ParticipantPanel
-                  title="Your current bid:"
+                  title="Your current escrow:"
                   value={currentBid}
                   currency="ETH"
                   button={
@@ -225,11 +226,11 @@ const WorkLock = ({
                </div>
                <div>
                   <span>Bidding Ends In</span>
-                  <h4>Ended</h4>
+                  <h4>{biddingTimeRemaining}</h4>
                </div>
                <div>
                   <span>Bid Cancel Time Remaining</span>
-                  <h4>0</h4>
+                  <h4>{remainingCancellationTimeHuman}</h4>
                </div>
             </div>
          </div>
