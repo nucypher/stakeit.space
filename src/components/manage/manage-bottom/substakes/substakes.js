@@ -142,13 +142,13 @@ const Substakes = ({ substakeList, prolongStake, divideStake }) => {
                            </div>
                            <div>
                               <span>{newObject.endDay}</span>
-                              <span>{newObject.endYear}</span>
+                              {newObject.isActive && <span>{newObject.endYear}</span>}
                            </div>
                         </div>
-                        <div className="substake_buttons">
+                        {newObject.isActive && <div className="substake_buttons">
                            <Button onClick={() => openModal1(object.id)}>Prolong</Button>
                            <Button onClick={() => openModal2(object.id, object.lockedValue)}>Divide</Button>
-                        </div>
+                        </div>}
                      </SubstakePanel>
                   );
                })

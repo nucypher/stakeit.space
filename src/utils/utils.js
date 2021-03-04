@@ -46,13 +46,15 @@ export const convertMSMod = milliseconds => {
 }
 
 export const substakeObjectCreator = object => {
-  let currentDate = Date.now() / 86400000
+  let currentDate = Date.now();
+  let endDate = new Date(object.lastPeriod * 86400000);
   return {
     value: (object.lockedValue / 10 ** 18).toLocaleString("en-Us"),
     startDay: new Date(object.firstPeriod * 86400000).toUTCString().slice(0, 11),
     startYear: new Date(object.firstPeriod * 86400000).toDateString().slice(-4),
-    currentDate: currentDate,
-    endDay: new Date((currentDate + +object.periods + 1) * 86400000).toUTCString().slice(0, 11),
-    endYear: new Date((currentDate + +object.periods) * 86400000).toDateString().slice(-4),
+    currentDate: currentDate / 86400000,
+    endDay: endDate < currentDate ? "Unlocked": endDate.toUTCString().slice(0, 11),
+    endYear: new Date(object.lastPeriod * 86400000).toDateString().slice(-4),
+    isActive: endDate > currentDate
   }
 }

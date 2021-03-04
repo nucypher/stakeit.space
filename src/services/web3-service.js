@@ -43,7 +43,7 @@ export default class ServiceWeb3 {
       const balanceEth = parseFloat(web3.utils.fromWei(await web3.eth.getBalance(account), 'ether')).toFixed(2);
 
       const StakerInfo = await Escrow.methods.stakerInfo(account).call();
-      
+
       let stakerFlags = await Escrow.methods.getFlags(account).call()
 
       const confirmedPeriods = StakerInfo.confirmedPeriod1
@@ -72,9 +72,10 @@ export default class ServiceWeb3 {
          if (getSubStakesLength !== '0') {
             let substakeList = [];
             for (let i = 0; i < getSubStakesLength; i++) {
-               let list = await Escrow.methods.getSubStakeInfo(account, i).call();
-               list.id = i.toString();
-               substakeList.push(list);
+               let rawList = await Escrow.methods.getSubStakeInfo(account, i).call();
+               rawList.id = i.toString();
+               rawList.lastPeriod = await Escrow.methods.getLastPeriodOfSubStake(account, i).call();
+               substakeList.push(rawList);
             }
             return substakeList;
          } else {
