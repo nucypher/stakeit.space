@@ -143,6 +143,7 @@ const Substakes = ({ substakeList, prolongStake, divideStake }) => {
                            <div>
                               <span>{newObject.endDay}</span>
                               {newObject.isActive && <span>{newObject.endYear}</span>}
+                              {newObject.unlockableNextPeriod && <small>(unlockable next period)</small>}
                            </div>
                         </div>
                         {newObject.isActive && <div className="substake_buttons">

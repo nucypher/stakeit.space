@@ -56,14 +56,16 @@ export const substakeObjectCreator = object => {
   const periodMS = 86400000 * daysPerPeriod;
   let currentDate = Date.now();
   let endDate = new Date(object.lastPeriod * periodMS);
+
   return {
     value: (object.lockedValue / 10 ** 18).toLocaleString("en-Us"),
     startDay: new Date(object.firstPeriod * periodMS).toUTCString().slice(0, 11),
     startYear: new Date(object.firstPeriod * periodMS).toDateString().slice(-4),
     currentDate: currentDate / periodMS,
-    endDay: endDate < currentDate ? "Unlocked": endDate.toUTCString().slice(0, 11),
+    endDay: object.lastPeriod === "1" ? "Unlocked": (endDate).toUTCString().slice(0, 11),
     endYear: new Date(object.lastPeriod * periodMS).toDateString().slice(-4),
     isActive: endDate > currentDate,
-    daysLeft: parseFloat((endDate - currentDate) / (1000 * 3600 * 24)).toFixed(0),
+    daysLeft: object.unlockingDuration * daysPerPeriod,
+    unlockableNextPeriod: object.lastPeriod != "1" && object.unlockingDuration === "0",
   }
 }
