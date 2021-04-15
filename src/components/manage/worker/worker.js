@@ -4,6 +4,7 @@ import utils from 'web3-utils';
 import Modal from '../../worklock/modal/modal';
 import SetWorkerModal from './set-worker-modal';
 import EthAccountContainer from '../eth-accont-container';
+import MainSpinner from '../../loader/main-spinner';
 import {connect} from 'react-redux';
 
 import WithdrawRewards from './withdrawRewards';
@@ -41,7 +42,7 @@ const WorkerWrapper = styled.div`
    }
 `;
 
-const Worker = ({ worker, workerEthBal, setWorker, confirmedPeriods, currentPeriod, setWorkerThunk }) => {
+const Worker = ({ worker, workerEthBal, setWorker, confirmedPeriods, currentPeriod, setWorkerThunk, isManageDataLoading }) => {
    const [inputAddress, setInputAddress] = useState('');
    const [isValid, setIsValid] = useState(true);
    const [copied, setCopied] = useState(false);
@@ -86,6 +87,7 @@ const Worker = ({ worker, workerEthBal, setWorker, confirmedPeriods, currentPeri
       setTimeout(() => setCopied(false), 1000);
    };
 
+   if (isManageDataLoading) return <MainSpinner />;
    return (
       <WorkerWrapper>
          <EthAccountContainer copied={copied} onAddrClick={onAddrClick} address={worker} title="Worker Account">
@@ -126,6 +128,7 @@ const Worker = ({ worker, workerEthBal, setWorker, confirmedPeriods, currentPeri
 };
 
 const mapStateToProps = ({ user }) => ({
+   isManageDataLoading: user.isManageDataLoading,
    worker: user.manage.worker,
    workerEthBal: user.manage.workerEthBal,
    setWorker: user.manage.setWorker,

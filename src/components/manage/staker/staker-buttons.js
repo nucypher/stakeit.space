@@ -75,7 +75,7 @@ const StakerButtons = ({ status, reStakeDisabled, windDown, setRestakeThunk, sho
       <StakerButtonsWrapper>
          <div>
             <h4>
-               Re-Stake<span>{status}</span>
+               Re-Stake
             </h4>
             <div className="btn_group">
                <span

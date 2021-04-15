@@ -1,3 +1,10 @@
+
+export const daysPerPeriod = 7
+
+export const daysToPeriods = (days) => {
+  return Math.ceil(parseInt(days)/daysPerPeriod).toString()
+}
+
 export const hexToBytes = hex => {
   hex = hex.toString(16)
   hex = hex.replace(/^0x/i, "")
@@ -46,15 +53,17 @@ export const convertMSMod = milliseconds => {
 }
 
 export const substakeObjectCreator = object => {
+  const periodMS = 86400000 * daysPerPeriod;
   let currentDate = Date.now();
-  let endDate = new Date(object.lastPeriod * 86400000);
+  let endDate = new Date(object.lastPeriod * periodMS);
   return {
     value: (object.lockedValue / 10 ** 18).toLocaleString("en-Us"),
-    startDay: new Date(object.firstPeriod * 86400000).toUTCString().slice(0, 11),
-    startYear: new Date(object.firstPeriod * 86400000).toDateString().slice(-4),
-    currentDate: currentDate / 86400000,
+    startDay: new Date(object.firstPeriod * periodMS).toUTCString().slice(0, 11),
+    startYear: new Date(object.firstPeriod * periodMS).toDateString().slice(-4),
+    currentDate: currentDate / periodMS,
     endDay: endDate < currentDate ? "Unlocked": endDate.toUTCString().slice(0, 11),
-    endYear: new Date(object.lastPeriod * 86400000).toDateString().slice(-4),
-    isActive: endDate > currentDate
+    endYear: new Date(object.lastPeriod * periodMS).toDateString().slice(-4),
+    isActive: endDate > currentDate,
+    daysLeft: parseFloat((endDate - currentDate) / (1000 * 3600 * 24)).toFixed(0),
   }
 }

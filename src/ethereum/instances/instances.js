@@ -4,8 +4,9 @@ import {abiEscrow, abiManager, abiToken, abiWorklock} from './contract-abis'
 const abiIndex = 3;  // registry index of ABI
 const providerUri = process.env.WEB3_PROVIDER_URI
 const web3 = new Web3(window.ethereum || providerUri);
-window.ethereum.autoRefreshOnNetworkChange = false;
-
+if (window.ethereum){
+    window.ethereum.autoRefreshOnNetworkChange = false;
+}
 
 // PolicyManager
 const POLICY_MANAGER_DISPATCHER_ADDRESS = '0x67E4A942c067Ff25cE7705B69C318cA2Dfa54D64';  // PM Dispatcher Address

@@ -27,12 +27,12 @@ describe('Stake service. Testing addNewStake function', () => {
    });
 
    it('should return correct dispatcher eth address', () => {
-      expect(result.DISPATCHER_ADDRESS).toBe('0xAB51fBDd4Faf6c691884B3A9b475E34E2092aE81');
+      expect(result.DISPATCHER_ADDRESS).toBe('0xbbD3C0C794F40c4f993B03F65343aCC6fcfCb2e2');
    });
    it('should correctly convert NU (inputAmount) into NuNits', () => {
       expect(result.amount).toBe('45000500000000000000000');
    });
    it('should correctly convert days (inputDuration) into array of bytes', () => {
-      expect(result.duration).toEqual([1, 109]);
+      expect(result.duration).toEqual('0x35');
    });
 });

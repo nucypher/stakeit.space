@@ -133,7 +133,7 @@ const Substakes = ({ substakeList, prolongStake, divideStake }) => {
                               <span>NU</span>
                            </div>
                            <div>
-                              <span>{object.periods}</span>
+                              <span>{newObject.daysLeft}</span>
                               <span>DAYS</span>
                            </div>
                            <div>

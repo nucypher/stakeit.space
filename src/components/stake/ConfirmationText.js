@@ -1,6 +1,7 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import styled from 'styled-components';
+import { daysToPeriods } from '../../utils/utils'
 // import {dark} from '../../themes/theme'
 
 const ContainerScrollable = styled.div`
@@ -58,7 +59,7 @@ const ConfirmationText = props => {
                ~ Value: <b>{props.amount}</b> NU ({y} NuNits)
             </span>
             <span>
-               ~ Duration: <b>{props.duration}</b> Days (<b>{props.duration}</b> Periods)
+               ~ Duration: <b>{props.duration}</b> Days (<b>{daysToPeriods(props.duration)}</b> Periods)
             </span>
             <p>* Ursula Node Operator Notice *</p>
             <p>

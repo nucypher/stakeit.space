@@ -51,6 +51,6 @@ const Manage = ({ isManageDataLoading }) => {
 };
 const mapStateToProps = ({ user }) => ({
    isManageDataLoading: user.isManageDataLoading,
-   
+
 });
 export default connect(mapStateToProps)(Manage);

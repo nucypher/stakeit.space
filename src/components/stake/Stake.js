@@ -61,7 +61,7 @@ const Button = styled.div`
       font-size: 11px;
       text-align: center;
       color: #888;
-      
+
    }
    span:first-child {
       padding: 10px 0;

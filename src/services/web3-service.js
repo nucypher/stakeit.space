@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 import {Escrow, instancePolicy, Token, Worklock, WORKLOCK_ADDRESS} from '../ethereum/instances/instances';
-// import { convertMS } from '../utils/utils';
+import { daysToPeriods } from '../utils/utils';
 
 const web3 = new Web3(window.ethereum);
 
@@ -32,7 +32,6 @@ export default class ServiceWeb3 {
 
       const nits = await Token.methods.balanceOf(stakerData.account).call();
       stakerData.balanceNu = parseFloat(nits) / 10 ** 18;
-
       return stakerData;
    };
 
@@ -60,9 +59,6 @@ export default class ServiceWeb3 {
       // Calculate Stakers unlocked NU
       const stakerUnlockedNits = web3.utils.toBN(StakerInfo.value).sub(web3.utils.toBN(lockedStakerNits));
       const stakerNuUnlocked = web3.utils.fromWei(stakerUnlockedNits, 'ether');
-
-      const isReStakeLockedBool = await Escrow.methods.isReStakeLocked(account).call();
-      const isRestakeLocked = isReStakeLockedBool ? 'Locked' : 'Unlocked';
 
       // get substake length by substake index
       const getSubStakesLength = await Escrow.methods.getSubStakesLength(account).call();
@@ -95,9 +91,9 @@ export default class ServiceWeb3 {
          workerEthBal: workerBal,
          staker: account,
          worker: StakerInfo.worker,
-         status: isRestakeLocked,
          windDown: stakerFlags.windDown,
          reStakeDisabled: !stakerFlags.reStake,
+         migrated: stakerFlags.migrated,
          subStakesLength: getSubStakesLength,
          substakeList: getAllSubstakes,
          StakerInfo: StakerInfo,
@@ -346,7 +342,7 @@ export default class ServiceWeb3 {
       setters.prolongStake = async (index, periods) => {
          try {
             const accounts = await web3.eth.getAccounts();
-            await Escrow.methods.prolongStake(index, periods).send({ from: accounts[0] });
+            await Escrow.methods.prolongStake(index, daysToPeriods(periods)).send({ from: accounts[0] });
          } catch (err) {
             console.error('Error', err);
          }
@@ -360,7 +356,7 @@ export default class ServiceWeb3 {
             // console.log(typeof nits);
             // console.log(nits);
 
-            await Escrow.methods.divideStake(index, nits, periods).send({ from: accounts[0] });
+            await Escrow.methods.divideStake(index, nits, daysToPeriods(periods)).send({ from: accounts[0] });
          } catch (err) {
             console.error('Error', err);
          }

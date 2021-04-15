@@ -1,4 +1,5 @@
 import ServiceWeb3Setters from './web3-service-setters';
+import { daysPerPeriod } from '../utils/utils'
 
 const serviceWeb3Setters = new ServiceWeb3Setters();
 
@@ -60,7 +61,7 @@ describe('testing blockchain setters', () => {
    it('prolongStake should return index and periods', async () => {
       const matchedObject = {
          index: '4',
-         periods: '45',
+         periods: `${Math.ceil(45/daysPerPeriod)}`,
          acc: '0x...',
       };
       const res = await serviceWeb3Setters.prolongStake('4', '45');
@@ -71,7 +72,7 @@ describe('testing blockchain setters', () => {
       const matchedObject = {
          index: '4',
          value: '45000560000000000000000',
-         periods: '45',
+         periods: `${Math.ceil(45/daysPerPeriod)}`,
          acc: '0x...',
       };
       const res = await serviceWeb3Setters.divideStake('4', '45000.56', '45');

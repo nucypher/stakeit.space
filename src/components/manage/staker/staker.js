@@ -38,7 +38,7 @@ const Staker = ({
    stakerNuBal,
    stakerNuLocked,
    stakerNuUnlocked,
-   status,
+   migrated,
    windDown,
    reStakeDisabled
 }) => {
@@ -73,6 +73,12 @@ const Staker = ({
                </span>
             </p>
             <p>
+               <span>Migrated:</span>
+               <span>
+                  <b>{migrated ? 'yes': 'no'}</b>
+               </span>
+            </p>
+            <p>
                <span>
                   Unlocked <i>(Available to withdraw):</i>
                </span>
@@ -83,8 +89,7 @@ const Staker = ({
          </StakerContent>
 
          <StakerButtons
-            
-            status={status}
+
             windDown={windDown}
             reStakeDisabled={reStakeDisabled}
          />
@@ -98,7 +103,7 @@ const mapStateToProps = ({ user }) => ({
    stakerNuBal: user.manage.stakerNuBal,
    stakerNuLocked: user.manage.stakerNuLocked,
    stakerNuUnlocked: user.manage.stakerNuUnlocked,
-   status: user.manage.status,
+   migrated: user.manage.migrated,
    windDown: user.manage.windDown,
    reStakeDisabled: user.manage.reStakeDisabled,
 });
